@@ -1,0 +1,50 @@
+import pyxel
+
+class Game:
+    def __init__(self):
+        pyxel.init(160, 120)
+        self.x = 80
+        self.y = 60
+        self.vy = 0
+        pyxel.run(self.update, self.draw)
+
+    def update(self):
+        if pyxel.btnp(pyxel.KEY_SPACE):
+            self.vy = -4
+        self.vy += 0.1
+        self.y += self.vy
+
+    def draw(self):
+        pyxel.cls(0)
+        pyxel.circ(self.x, self.y, 4, 9)
+
+Game()
+
+
+import pyxel
+
+class Game:
+    def __init__(self):
+        pyxel.init(160, 120)
+        self.x = 80
+        self.y = 60
+        self.vy = 0
+        self.ground_y = 100
+        pyxel.run(self.update, self.draw)
+
+    def update(self):
+        if pyxel.btnp(pyxel.KEY_SPACE):
+            self.vy = -4
+        self.vy += 0.1
+        self.y += self.vy
+        
+        if self.y > self.ground_y:
+            self.y = self.ground_y
+            self.vy = 0
+
+    def draw(self):
+        pyxel.cls(0)
+        pyxel.line(0, self.ground_y, 160, self.ground_y, 7)
+        pyxel.circ(self.x, self.y, 4, 9)
+
+Game()
