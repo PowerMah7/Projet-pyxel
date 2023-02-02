@@ -55,7 +55,7 @@ class App:
         
 
     def update(self):
-        global x,y,dash,skin,map_x
+        global x,y,dash,skin,map_x,map_id
         if pyxel.btnp(pyxel.KEY_Q):
             #On quitte si la touche Q (Qwerty) est pressee
             pyxel.quit()
