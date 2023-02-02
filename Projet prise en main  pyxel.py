@@ -3,7 +3,8 @@
 #Herault Adel 1G1
 #kiyan Laranjeira 1G1
 import pyxel,random
-global var_nuage,coord,coord_x,skin,map_x,map_y,sol_color
+global var_nuage,coord,coord_x,skin,map_x,map_y,sol_color,map_id
+map_id=0
 map_y=0
 map_x=0
 dash=2
@@ -41,7 +42,7 @@ class App:
         pyxel.music(0)
         pyxel.playm(0,1,True)
         self.player_x = 5
-        self.player_y = 43
+        self.player_y = 40
         self.player_speed = 2
         self.jump_speed = 0
         self.gravity = 0.5
@@ -62,7 +63,8 @@ class App:
             skin=0
             self.player_x=self.player_x+self.player_speed
             if self.player_x>=156:
-                self.player_x=10
+                map_id += 1
+                self.player_x=5
                 map_x=map_x+160
                 dash=2
         if pyxel.btn(pyxel.KEY_LEFT):
@@ -71,6 +73,7 @@ class App:
             if self.player_x<=-2:
                 self.player_x=-2
                 if map_x!=0:
+                    map_id -= 1
                     map_x=map_x-160
                     self.player_x=156
                     
@@ -78,11 +81,14 @@ class App:
             self.jump_speed = -5
             
         self.jump_speed += self.gravity
-        self.player_y += self.jump_speed 
+        self.player_y += self.jump_speed
         
-        if self.player_y > 42:
-            self.player_y = 43
+        
+        if pyxel.pget(self.player_x + 8, self.player_y + 16) == 11:
             self.jump_speed = 0
+            self.gravity = 0
+        if pyxel.pget(self.player_x + 8, self.player_y + 16) != 11:
+            self.gravity = 0.5
         
         if pyxel.btnp(pyxel.KEY_SPACE):
             if dash >= 1:
@@ -92,12 +98,15 @@ class App:
                     dash=2
             dash=dash-1
         if pyxel.btnp(pyxel.KEY_P):
-            pyxel.blt(self.player_x,self.player_y,1,0,0,16,16,0)       
+            pyxel.blt(self.player_x,self.player_y,1,0,0,16,16,0)
+            
+        if self.player_y==80:
+            pyxel.init(160, 80, title="GAME OVER")
+            
         
             
             
     def draw(self):
-        global skin,map_x
         #nuage(8)
         #sol()
         pyxel.cls(0)
