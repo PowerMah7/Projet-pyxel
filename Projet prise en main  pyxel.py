@@ -21,7 +21,6 @@ def sol():
             
 def nuage(y):
     global coord,coord_x
-    pyxel.cls(12)
     if coord>=150:
         coord=0
     coord=coord+1
@@ -62,7 +61,7 @@ class App:
         if pyxel.btn(pyxel.KEY_RIGHT):
             skin=0
             self.player_x=self.player_x+self.player_speed
-            if self.player_x>=156:
+            if self.player_x>=150:
                 map_id += 1
                 self.player_x=5
                 map_x=map_x+160
@@ -70,12 +69,13 @@ class App:
         if pyxel.btn(pyxel.KEY_LEFT):
             skin=16
             self.player_x=self.player_x-self.player_speed
-            if self.player_x<=-2:
-                self.player_x=-2
+            if self.player_x<=5:
+                self.player_x=5
                 if map_x!=0:
                     map_id -= 1
                     map_x=map_x-160
-                    self.player_x=156
+                    self.player_x=150
+                    self.player_y=42
                     
         if pyxel.btn(pyxel.KEY_UP) and self.player_y == 43:
             self.jump_speed = -5
@@ -100,17 +100,30 @@ class App:
         if pyxel.btnp(pyxel.KEY_P):
             pyxel.blt(self.player_x,self.player_y,1,0,0,16,16,0)
             
-        if self.player_y==80:
-            pyxel.init(160, 80, title="GAME OVER")
-            
+        if self.player_y>=100:
+            map_id=0
+            map_y=0
+            map_x=0
+            dash=2
+            var_nuage=0
+            coord=0
+            coord_x=6
+            skin=0
+            self.player_x = 5
+            self.player_y = 40
+            self.player_speed = 2
+            self.jump_speed = 0
+            self.gravity = 0.5
+
+
         
-            
-            
     def draw(self):
-        #nuage(8)
         #sol()
         pyxel.cls(0)
         pyxel.bltm(0,0,0,map_x,map_y,160,80)
         pyxel.blt(self.player_x,self.player_y,0,skin,0,16,16,0)
+        nuage(8)
+        
+            
             
 App()
